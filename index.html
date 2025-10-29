@@ -165,10 +165,10 @@
         </div>
       </div>
 
-      <label for="comentario">Você quer deixar algum comentário ou sugestão?</label>
+      <label for="comentario">Você quer deixar algum comentário ou sugestão ou elogio?</label>
       <textarea name="comentario" id="comentario" rows="4"></textarea>
 
-      <button type="submit">Enviar</button>
+      <button type="submit" id="submitBtn">Enviar</button>
       <div class="success" id="successMsg">Obrigado pela sua resposta! ✅</div>
     </form>
   </div>
@@ -184,6 +184,7 @@
       const contatoInfo = document.getElementById('contatoInfo');
       const telefoneInput = document.getElementById('telefone');
       const contatoNomeInput = document.getElementById('contatoNome');
+      const submitButton = document.getElementById('submitBtn');
 
       const notaRadios = document.querySelectorAll('input[name="satisfacao"]');
       notaRadios.forEach(radio => {
@@ -217,6 +218,8 @@
 
       document.getElementById('csatForm').addEventListener('submit', function(e) {
         e.preventDefault();
+        submitButton.disabled = true;
+
         const formData = new FormData(this);
         fetch('https://script.google.com/macros/s/AKfycbwggVOpqZJQANaNy3nTGuAtUZiU4FhKxdZ7WyuS7pfV2fHGHONOkdPPirqs4VNFyp0jQA/exec', {
           method: 'POST',
@@ -233,10 +236,12 @@
           } else {
             alert('Erro ao enviar. Tente novamente.');
           }
+          submitButton.disabled = false;
         })
         .catch(error => {
           console.error('Erro:', error);
           alert('Erro de conexão.');
+          submitButton.disabled = false;
         });
       });
     });
